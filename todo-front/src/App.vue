@@ -39,7 +39,7 @@ export default {
 
   // data 에 변화가 일어나는 시점에 실행하는 함수
   updated() {
-    this.isLoggedIn = this.$$session.has("jwt"); // 그 때마다 isLoggedIn 값 바꿔줌
+    this.isLoggedIn = this.$session.has("jwt"); // 그 때마다 isLoggedIn 값 바꿔줌
   }
 };
 </script>
