@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 # JWT 관련 세팅
 # http://jpadilla.github.io/django-rest-framework-jwt/#usage
 
+# view 함수로 들어가기 전 인증 및 로그인 여부를 확인해주는 세팅
 REST_FRAMEWORK = {
     # 로그인 여부 확인 클래스
     'DEFAULT_PERMISSION_CLASSES': (
@@ -84,6 +85,9 @@ JWT_AUTH = {
 
 
 MIDDLEWARE = [
+    # https://github.com/adamchainz/django-cors-headers/#setup
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -94,12 +98,12 @@ MIDDLEWARE = [
 ]
 
 # https://github.com/adamchainz/django-cors-headers/#cors_origin_whitelist
-CORS_ORIGIN_WHITELIST = [
-    "https://example.com",
-    "https://sub.example.com",
-    "http://localhost:8080",
-    "http://127.0.0.1:9000"
-]
+# CORS_ORIGIN_WHITELIST = [
+#     "https://example.com",
+#     "https://sub.example.com",
+#     "http://localhost:8080",
+#     "http://127.0.0.1:9000"
+# ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -174,5 +178,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
- 
+
 AUTH_USER_MODEL = 'todos.User'

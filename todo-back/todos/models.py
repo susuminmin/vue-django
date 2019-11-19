@@ -9,6 +9,7 @@ class User(AbstractUser):
 
 
 class Todo(models.Model):
+    # user.todo_set.all() 을 related_name 으로 고쳐줄 수 있음 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     completed = models.BooleanField(default=False)

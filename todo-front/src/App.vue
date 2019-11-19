@@ -1,18 +1,52 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link>
+      <!-- isLoggedIn 값에 따라서 조건부 렌더링 -->
+      <div v-if="isLoggedIn">
+        <router-link to="/">Home</router-link> |
+        <!-- prevent 를 사용하는 이유는 href 로 redirect 를 방지하기 위함 -->
+        <a @click.prevent="logout" href="/logout">Logout</a>
+      </div>
+      <div v-else>
+        <router-link to="/login">Login</router-link>
+      </div>
     </div>
     <div class="container col-6">
-      <router-view/>
+      <router-view />
     </div>
   </div>
 </template>
 
+<script>
+import router from "@/router";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      // 사용자의 로그인 상태 값, jwt 가 있으면 true
+      isLoggedIn: this.$session.has("jwt")
+    };
+  },
+  methods: {
+    logout() {
+      // 1. session 통째로 삭제
+      this.$session.destroy();
+      // 2. 삭제 후 로그인 페이지로 보냄
+      router.push("/login");
+    }
+  },
+
+  // data 에 변화가 일어나는 시점에 실행하는 함수
+  updated() {
+    this.isLoggedIn = this.$$session.has("jwt"); // 그 때마다 isLoggedIn 값 바꿔줌
+  }
+};
+</script>
+
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
