@@ -1,8 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import TodoSerializer
+from .serializers import TodoSerializer, UserDetailSerializer
 from .models import Todo
+
+# get_user_model
+User = get_user_model()
 
 
 @api_view(['POST'])
@@ -28,3 +32,12 @@ def todo_update_delete(request, todo_id):
     if request.method == 'DELETE':
         todo.delete()
         return Response(status=204)  # 삭제했습니다 status 코드
+
+
+# GET 요청에서 Body 안 넣음 
+@api_view(['GET'])
+def user_detail(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    serializer = UserDetailSerializer(instance=user)
+    return Response(serializer.data)
+
