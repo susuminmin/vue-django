@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>로그인 페이지</h1>
     <!-- 3. 컴퍼넌트 사용 -->
     <LoginForm />
   </div>

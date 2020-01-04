@@ -55,7 +55,7 @@ export default {
   methods: {
     login() {
       if (this.checkForm()) {
-        this.loading = true;
+        this.loading = true; // 로그인 요청 시작시 true
         // http://127.0.0.1:8000
         const SERVER_IP = process.env.VUE_APP_SERVER_IP;
 
@@ -73,11 +73,11 @@ export default {
 
             // vuex store 를 등록해서 $store 로 접근 가능
             // dispatch: 컴퍼넌트에서 액션을 실행하는 함수
-            this.$store.dispatch("login", response.data.token);
+            this.$store.dispatch("logIn", response.data.token);
 
-            this.loading = false;
+            this.loading = false; // 로그인 요청 끝나면 false
 
-            // vue router 를 통해 특정 페이지로 이동
+            // vue router 를 통해 특정 페이지로 이동 (여기서는 Home 으로 보내줌)
             router.push("/");
           })
           .catch(error => {
@@ -96,6 +96,7 @@ export default {
       }
       if (this.errors.length === 0) {
         return true;
+        // true 가 아닐 경우 undefined (false) 를 return 하므로 굳이 작성하지 않아도 됨
       }
     }
   }
